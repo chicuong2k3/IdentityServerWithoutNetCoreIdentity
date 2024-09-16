@@ -1,0 +1,76 @@
+version: '3.4'
+
+services:
+  bookstore.webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_HTTPS_PORTS=5001
+      - ConnectionStrings__Databse=Host=bookstore.database;Port=5432;Database=BookStoreDatabase;UserId=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Cache=bookstore.redis:6379
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    restart: always
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - bookstore.database
+      - bookstore.redis
+
+  bookstore.database:
+    container_name: BookStoreDatabase
+    restart: always
+    environment:
+      - POSTGRES_DB=BookStoreDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4.container
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - 4040:80
+      
+ 
+  bookstore.seq:
+    container_name: BookStore.Seq
+    restart: always
+    environment: 
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80  
+
+  bookstore.redis:
+    container_name: BookStore.Redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  identityprovider:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=9000
+      - ASPNETCORE_HTTPS_PORTS=9050
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-identity-server.pfx
+    ports:
+      - "9000:9000"
+      - "9050:9050"
+    restart: always
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
+      - ./src/BookStore.IdentityProvider/certs:/https/
+      - type: bind
+        source: ./certs/aspnetapp-root-cert.cer
+        target: /https-root/aspnetapp-root-cert.cer

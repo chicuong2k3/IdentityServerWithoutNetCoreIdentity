@@ -1,0 +1,30 @@
+﻿@page
+@model IdentityProvider.Pages.User.ForgotPassword.IndexModel
+@{
+}
+
+<div id="recoverform" class="col-8 offset-2 mt-4">
+    <div class="logo">
+        <h5 class="font-medium m-b-20 text-center">Đặt lại mật khẩu</h5>
+        <span>Điền địa chỉ email của bạn và kiểm tra email.</span>
+    </div>
+    <div class="row m-t-20">
+        <form class="col-12" asp-action="/User/ForgotPassword">
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ti-email"></i></span>
+                    </div>
+                    <input asp-for="Input.Email" autofocus class="form-control">
+                </div>
+                <span class="text-danger" asp-validation-for="Input.Email"></span>
+            </div>
+            <div class="row m-t-20">
+                <div class="col-12">
+                    <button class="btn btn-block btn-danger" type="submit">Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

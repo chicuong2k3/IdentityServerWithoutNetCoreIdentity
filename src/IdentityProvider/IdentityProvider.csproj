@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>7d011f38-ee8d-442e-9bf7-8055654d48cd</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
+		<PackageReference Include="Duende.IdentityServer" Version="7.0.4" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.4" />
+		<PackageReference Include="MailKit" Version="4.7.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="TwoStepsAuthenticator" Version="1.4.1" />
+	</ItemGroup>
+</Project>

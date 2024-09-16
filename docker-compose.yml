@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  bookstore.webapi:
+    image: ${DOCKER_REGISTRY-}bookstorewebapi
+    build:
+      context: .
+      dockerfile: src/BookStore.WebApi/Dockerfile
+
+  bookstore.database:
+    image: postgres:latest
+
+  pgadmin:
+    image: dpage/pgadmin4
+
+  bookstore.redis:
+    image: redis:latest
+
+  bookstore.seq:
+    image: datalust/seq:latest
+    
+
+  identityprovider:
+    image: ${DOCKER_REGISTRY-}identityprovider
+    build:
+      context: .
+      dockerfile: src/IdentityProvider/Dockerfile
+
+

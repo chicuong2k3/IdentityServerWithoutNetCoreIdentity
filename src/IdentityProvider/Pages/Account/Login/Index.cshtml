@@ -1,0 +1,134 @@
+﻿ @page
+@model IdentityProvider.Pages.Account.Login.Index
+
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(../../assets/images/big/auth-bg.jpg) no-repeat center center;">
+    <div class="auth-box">
+        <div id="loginform">
+            <div class="logo">
+                <h5 class="font-medium m-b-20">Đăng nhập</h5>
+            </div>
+            <!-- Form -->
+            <div class="row">
+                <div class="col-12">
+                    @if (Model.View.EnableLocalLogin)
+                    {
+                        <partial name="_ValidationSummary" />
+                        <form class="form-horizontal m-t-20" asp-page="/Account/Login/Index">
+                            <input type="hidden" asp-for="Input.ReturnUrl" />
+                            <div class="form-group">
+                                <label asp-for="Input.Username"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ti-user"></i></span>
+                                    </div>
+                                    <input asp-for="Input.Username" autofocus class="form-control">
+                                </div>
+                                <span class="text-danger" asp-validation-for="Input.Username"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Input.Password"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ti-lock"></i></span>
+                                    </div>
+                                    <input asp-for="Input.Password" autofocus class="form-control">
+                                </div>
+                                <span class="text-danger" asp-validation-for="Input.Password"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Input.Totp"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ti-mobile"></i></span>
+                                    </div>
+                                    <input asp-for="Input.Totp" autofocus class="form-control" autocomplete="off">
+                                </div>
+                                <span class="text-danger" asp-validation-for="Input.Totp"></span>
+                            </div>
+
+                            @if (Model.View.AllowRememberLogin)
+                            {
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="custom-control custom-checkbox">
+                                            <input asp-for="Input.RememberLogin" class="custom-control-input">
+                                            <label asp-for="Input.RememberLogin" class="custom-control-label">
+                                                Nhớ mật khẩu
+                                            </label>
+                                            <a asp-page="/User/ForgotPassword/Index" class="text-info float-right">
+                                                <i class="fa fa-lock m-r-5"></i> Quên mật khẩu?
+                                            </a>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-group text-center">
+                                <div class="col-xs-12 p-b-20">
+                                    <button class="btn btn-block btn-info" name="Input.Button" value="login">Đăng nhập</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group m-b-0 m-t-10">
+                                <div class="col-sm-12 text-center">
+                                    Chưa có tài khoản? 
+                                    <a asp-page="/User/Registration/Index"
+                                       asp-route-returnUrl="@Model.Input.ReturnUrl"
+                                        class="text-info m-l-5">
+                                        <b>Đăng ký ngay</b>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>                        
+                    }
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                            @if (Model.View.VisibleExternalProviders.Any())
+                            {
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <p>Hoặc đăng nhập bằng</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-inline">
+                                                @foreach (var provider in Model.View.VisibleExternalProviders)
+                                                {
+                                                    <li class="list-inline-item">
+                                                        @if (provider.AuthenticationScheme == "Windows")
+                                                        {
+                                                            @* <a class="btn btn-secondary"
+                                                asp-page="/Windows/Index"
+                                                asp-route-returnUrl="@Model.Input.ReturnUrl">
+                                                @provider.DisplayName
+                                                </a> *@
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="btn btn-secondary"
+                                                               asp-page="/ExternalLogin/Challenge"
+                                                               asp-route-scheme="@provider.AuthenticationScheme"
+                                                               asp-route-returnUrl="@Model.Input.ReturnUrl">
+                                                                @provider.DisplayName
+                                                            </a>
+                                                        }
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

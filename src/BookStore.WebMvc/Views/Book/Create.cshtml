@@ -1,0 +1,61 @@
+﻿@model CreateBookModel
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thêm sách</h4>
+                <h6 class="card-subtitle"></h6>
+            </div>
+            <hr>
+            <form method="post"
+                  asp-action="Create"
+                asp-controller="Book">
+                <div class="card-body">
+                    <h4 class="card-title">Điền thông tin sách</h4>
+                    <div class="form-group">
+                        <label asp-for="Title"></label>
+                        <input asp-for="Title" class="form-control">
+                        <span asp-validation-for="Title" class="text-danger">
+
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author"></label>
+                        <input asp-for="Author" class="form-control">
+                        <span asp-validation-for="Author" class="text-danger">
+
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" class="form-control">
+                        <span asp-validation-for="Price" class="text-danger">
+
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Quantity"></label>
+                        <input asp-for="Quantity" class="form-control">
+                        <span asp-validation-for="Quantity" class="text-danger">
+
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group m-b-0 text-right">
+                        <button type="submit" class="btn btn-info waves-effect waves-light">Lưu</button>
+                        <a class="btn btn-dark waves-effect waves-light"
+                           asp-action="Index"
+                           asp-controller="Book">
+                            Thoát
+                        </a>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
